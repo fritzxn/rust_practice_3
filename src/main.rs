@@ -31,5 +31,44 @@ fn main() {
     ];
 
 
+//--------------------------------------------------
+let data = "initial comment";
+let mut s = String::new();
+let s = data.to_string();
+let s = "initial comment".to_string();
+let s = String::from("initial comment");
+let s1 = "woohoo";
+let s2 = "bahah";
+let new = s + &s1;// takes ownership of s
+let new2 = format!("{s1}-{s2}");//only takes references of s1 and s2
+//use caution when creating string slices with ranges, because doing 
+//so can crash your program.
+for c in "Зд".chars() {
+    println!("{c}");
+}
+for b in "Зд".bytes() {
+    println!("{b}");
+}
+
+use std::collections::HashMap;
+let mut scores = HashMap::new();
+scores.insert(String::from("blue"), 10);
+scores.insert(String::from("yellow"), 50);
+let team_name = String::from("blue");
+let score = scores.get(&team_name).copied().unwrap_or(0);
+for (key, value) in &scores {
+    println!("{key}: {value}");
+}
+
+
+
+
+
+
+
+
+
+
+
 
 }

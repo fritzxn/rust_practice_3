@@ -1,3 +1,5 @@
+use std::array::from_fn;
+
 fn main() {
     //let mut v = Vec::new();
     let mut v = vec![1,2,3];
@@ -59,10 +61,39 @@ let score = scores.get(&team_name).copied().unwrap_or(0);
 for (key, value) in &scores {
     println!("{key}: {value}");
 }
+use std::collections::HashMap;
+let field_name = String::from("fav color");
+let field_value = String::from("blue");
+let mut map = HashMap::new();
+map.insert(field_name, field_value);
+// field name and value now invalid
 
 
+let mut scores = HashMap::new();
+scores.insert(String::from("Blue"), 10);
+scores.insert(String::from("Blue"), 25);
+println!("{scores:?}");
 
 
+let mut scores = HashMap::new();
+scores.insert(String::from("Blue"), 10);
+scores.entry(String::from("yellow")).or_insert(50);
+scores.entry(String::from("Blue")).or_insert(50);
+println!("{scores:?}");
+//The first call to entry will insert the key for the Yellow
+// team with the value 50 because the Yellow team doesn’t have a 
+//value already. The second call to entry will not change the hash 
+//map, because the Blue team already has the value 10.
+
+
+use std::collections::HashMap;
+let text = "hello world wonderful world";
+let mut map = HashMap::new();
+for word in text.split_whitespace() {
+    let count = map.entry(word).or_insert(0);
+    *count += 1;
+}
+println!("{map:?}");
 
 
 

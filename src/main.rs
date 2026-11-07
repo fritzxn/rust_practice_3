@@ -1,4 +1,4 @@
-use std::array::from_fn;
+/* use std::array::from_fn;
 
 fn main() {
     //let mut v = Vec::new();
@@ -97,9 +97,125 @@ println!("{map:?}");
 
 
 
+} */
 
 
 
 
+//---------------------------------------------------------------------------------------------------------------------------
+//error handling
 
+
+/* fn main () {
+    let v = vec![1,2,3];
+    v[99];
+} */
+
+/* use::std::fs::File;
+use std::io::{self, ErrorKind}; */
+/*fn main () {
+    let greeting_file_result = File::open("hello.txt");
+    let greeting_file = match greeting_file_result {
+        Ok(file) => file,
+        Err(error) => match error.kind() {
+            ErrorKind::NotFound => {
+                match File::create("hello.txt") {
+                    Ok(fc) => fc,
+                    Err(e) => panic!(
+                        "problem creating the file: {e:?}",),
+                }
+                
+            }
+            _ => {
+                    panic!("problem opening: {error:?}");
+                }
+        },
+   };
+} */
+
+/* fn main() {
+    let greeting_file = File::open("hello.txt").unwrap_or_else(|error| {
+        if error.kind() == ErrorKind::NotFound {
+            File::create("hello.txt").unwrap_or_else(|error| {
+                panic!("problem creating: {error:?}");
+            })           
+        } else {
+            panic!(" problem openeing: {error:?}");
+        }
+    });
 }
+ */
+/* use std::fs::File;
+fn main() {
+    let greeting_file = File::open("hello.txt").unwrap();
+}
+
+use std::fs::File;
+fn main() {
+    let greeting_file = File::open("hello.txt")
+        .expect("hello.txt should be included in this project");
+}
+//choose expect rather than unwrap and give more context about 
+//why the operation is expected to always succeed. That way, 
+//if your assumptions are ever proven wrong, you have more 
+//information to use in debugging. */
+
+/* use::std::fs::File;
+use std::io::{self, Read};
+fn main() {
+
+fn read_username_from_file() -> Result<String, io::Error> {
+    let username_file_result = File::open("hello.txt");
+    let mut username_file = match username_file_result {
+        Ok(file) => file,
+        Err(e) => return Err(e),
+    };
+    let mut username = String::new();
+    match username_file.read_to_string(&mut username) {
+        Ok(_) => Ok(username),
+        Err(e) => Err(e),
+    }
+}
+} */
+
+/* use std::{fs::File, io::{self, Read}};
+
+// the code above can be written as 
+fn read_username_from_file() -> Result<String, io::Error> {
+    let mut username_file = File::open("hello.txt")?;
+    let mut username = String::new();
+    username_file.read_to_string(&mut username)?;
+    Ok(username)
+} */
+//If the value of the Result is an Ok, the value inside the Ok 
+//will get returned from this expression, and the program will 
+//continue. If the value is an Err, the Err will be returned from 
+//the whole function as if we had used the return keyword so that 
+//the error value gets propagated to the calling code.
+
+
+//We could even shorten this code further by chaining method calls 
+//immediately after the ?,
+
+/* use std::{fs::File, io::{self, Read}};
+
+fn read_username_from_file() -> Result<String, io::Error> {
+    let mut username = String::new();
+    File::open("hello.txt")?.read_to_string(&mut username)?;
+    Ok(username)
+} */
+
+
+//a way to make this even shorter using fs::read_to_string.
+
+use std::{error::Error, fs, io};
+
+fn read_username_from_file() -> Result<String, io::Error> {
+    fs::read_to_string("hello.txt")
+}
+
+fn main() -> Result<(), Box<dyn Error>> {
+    let greeting_file = File::open("hello.txt")?;
+    Ok(())
+}
+

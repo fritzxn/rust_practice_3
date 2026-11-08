@@ -1,4 +1,4 @@
     Checking rust_practice_3 v0.1.0 (/home/fritz/Downloads/RustParentFolder/rust_practice_3)
-error: could not compile `rust_practice_3` (bin "rust_practice_3") due to 1 previous error
-warning: build failed, waiting for other jobs to finish...
 error: could not compile `rust_practice_3` (bin "rust_practice_3" test) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `rust_practice_3` (bin "rust_practice_3") due to 1 previous error

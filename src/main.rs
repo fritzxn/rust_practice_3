@@ -208,7 +208,7 @@ fn read_username_from_file() -> Result<String, io::Error> {
 
 //a way to make this even shorter using fs::read_to_string.
 
-use std::{error::Error, fs, io};
+/* use std::{error::Error, fs, io};
 
 fn read_username_from_file() -> Result<String, io::Error> {
     fs::read_to_string("hello.txt")
@@ -217,5 +217,84 @@ fn read_username_from_file() -> Result<String, io::Error> {
 fn main() -> Result<(), Box<dyn Error>> {
     let greeting_file = File::open("hello.txt")?;
     Ok(())
+} */
+
+// can reread the value being evaluated again which is at the end of the chapter
+//custom types for validation
+//------------------------------------------------------------------
+
+//GENERIC TYPES, TRAITS, AND LIFETIMES
+
+fn largest<T>(list: &[T]) -> &T {
+    let mut largest = &list[0];
+    for item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+    largest
 }
+
+fn main() {
+    let number_list = vec![23,234,65,444];
+    let result = largest(&number_list);
+    println!("largest is {result}");
+    let char_list = vec!['e','r','w'];
+    let result = largest(&char_list);
+    println!("largest is {result}");
+}//will produce an error
+
+struct Point<T> {
+    x: T,
+    y: T,
+}
+impl<T> Point<T> {
+    fn x(&self) -> &T {
+        &self.x
+    }
+}
+fn main() {
+    let p = Point {x: 5, y: 10};
+    println!("p.x = {}", p.x());
+}
+
+fn main() {
+    let integer = Point {x: 5, y: 7};
+    let float = Point{x: 2.0, y: 4.3};
+}
+//both x and y have the same value type here
+
+struct  Point<Y, U> {
+    x: T,
+    y: U,
+}
+
+fn main() {
+    let both_integer = Point {x: 5, y: 10};
+    let both_float = Point {x: 1.0, y: 4.0};
+    let integer_and_float = Point {x: 5, y: 4.0};
+}
+
+//generics are very efficient cuz of monomorphization
+
+pub trait Summary {
+    fn summarize(&self) -> String {
+        String::from("(Read more...)")
+   }
+}
+
+let article = NewsArticle {
+    headline: String::from(
+        "Penguins win the Stanley Cup Championship!"
+   ),
+    location: String::from("Pittsburgh, PA, USA"),
+    author: String::from("Iceburgh"),
+    content: String::from(
+        "The Pittsburgh Penguins once again are the best \
+         hockey team in the NHL.",
+   ),
+};
+println!("New article available! {}", article.summarize());
+
+//traits is quite interesting
 

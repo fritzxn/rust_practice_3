@@ -298,3 +298,39 @@ println!("New article available! {}", article.summarize());
 
 //traits is quite interesting
 
+use aggregator::{SocialPost, Summary};
+fn main() {
+    let post = SocialPost {
+        username: String::from("horse_ebooks"),
+        content: String::from("as you alr"),
+        reply: false,
+        repost: false,
+    };
+    println!("1 new post: {}", post.summarize());
+}
+
+fn returns_summarizable() -> impl Summary {
+    SocialPost {
+        username: String::from("horse_ebooks"),
+        content: String::from(
+            "unfortunately, as you probably already know, people",
+        ),
+        reply: false,
+        repost: false,
+    };
+}
+
+//--------------------------------------------------------
+//lifetimes
+
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {x} else {y}
+}
+
+fn main() {
+    let string1 = "abcd";
+    let string2 = "xyz";
+    let result = longest(string1, string2);
+    println!(" the result is {result},");
+}
+

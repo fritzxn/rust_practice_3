@@ -298,6 +298,8 @@ println!("New article available! {}", article.summarize());
 
 //traits is quite interesting
 
+use std::fmt::Display;
+
 use aggregator::{SocialPost, Summary};
 fn main() {
     let post = SocialPost {
@@ -334,3 +336,25 @@ fn main() {
     println!(" the result is {result},");
 }
 
+struct Important<'a> {
+    part: &'a str,
+}
+fn main() {
+    let novel = String::from("callll");
+    let first_sentence = novel.split('.').next().unwrap();
+    let i = Important {
+        part:first_sentence,
+    };
+}
+
+fn longest_announcement<'a, T> (
+    x: &'a str,
+    y: &'a str,
+    ann: T,
+) -> &'a str 
+where 
+    T: Display, 
+{
+    println!(" announcememt! {ann}");
+    if x.len() > y.len() {x} else {y}
+}
